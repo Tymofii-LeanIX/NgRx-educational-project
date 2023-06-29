@@ -1,1 +1,8 @@
-<p>book-list works!</p>
+<div class="book-list">
+  <div class="book" *ngFor="let book of books$ | async">
+    <img [src]="book.coverImage" alt="Book Cover">
+    <h3>{{ book.title }}</h3>
+    <p>{{ book.author }}</p>
+    <button (click)="selectBook(book.id)">View Details</button>
+  </div>
+</div>

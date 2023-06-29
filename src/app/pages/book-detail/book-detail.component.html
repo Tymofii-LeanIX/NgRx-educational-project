@@ -1,1 +1,11 @@
-<p>book-detail works!</p>
+<div class="book-detail" *ngIf="book$ | async as book">
+    <div class="modal-background" (click)="deselectBook()"></div>
+    <div class="modal-content">
+      <img class="book-cover" [src]="book.coverImage" alt="Book Cover">
+      <h2>{{ book.title }}</h2>
+      <p>{{ book.author }}</p>
+      <p>{{ book.description }}</p>
+      <button (click)="addToCart(book)">Add to Cart</button>
+    </div>
+  </div>
+  
