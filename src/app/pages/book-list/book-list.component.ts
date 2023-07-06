@@ -1,9 +1,10 @@
-import { Router } from '@angular/router';
-
-import { BookService } from './../../services/book.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Book } from 'src/app/shared/book.type';
+import { BooksState } from 'src/app/shared/union-state.interface';
+import { Store } from '@ngrx/store';
+import { LoadBooks, NavigateToSelectedBook, SelectBook } from 'src/app/store/actions/book.actions';
+import { selectAllBooks } from 'src/app/store/reducers/books.reducer';
 
 @Component({
   selector: 'app-book-list',
@@ -11,15 +12,15 @@ import { Book } from 'src/app/shared/book.type';
   styleUrls: ['./book-list.component.css']
 })
 export class BookListComponent implements OnInit{
-  books$!: Observable<Book[]>
-
-  constructor(private bookService: BookService, private router: Router) {}
-
+  books$: Observable<Book[]> = this.store.select(selectAllBooks)
+  constructor(private store: Store<BooksState>) {}
+  
   ngOnInit(): void {
-    this.books$ = this.bookService.getBooks();
+    this.store.dispatch(new LoadBooks)
   }
 
-  selectBook(id: number): void{
-    this.router.navigate(['/books/', id])
+  selectBook(book: Book): void{
+    this.store.dispatch(new SelectBook(book));
+    this.store.dispatch(new NavigateToSelectedBook(book))
   }
 }

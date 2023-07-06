@@ -1,6 +1,6 @@
-<div class="book-detail" *ngIf="book$ | async as book">
+<div class="book-detail" *ngIf="selectedBook$ | async as book">
     <div class="modal-background" (click)="deselectBook()"></div>
-    <div class="modal-content">
+    <div class="modal-content" [ngClass]="{'show': book !== null}">
       <img class="book-cover" [src]="book.coverImage" alt="Book Cover">
       <h2>{{ book.title }}</h2>
       <p>{{ book.author }}</p>
